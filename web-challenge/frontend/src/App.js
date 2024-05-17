@@ -1,17 +1,25 @@
+//import modul-modul
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './App.css';
 
+//komponen App dan menginisialisasi state
 function App() {
+  // State untuk menyimpan task yang sedang diinput oleh pengguna
   const [task, setTask] = useState('');
+  // State untuk menyimpan daftar todos
   const [todos, setTodos] = useState([]);
+  // State untuk menyimpan ID task yang sedang diedit
   const [editingId, setEditingId] = useState(null);
+  // State untuk menyimpan task yang telah diedit
   const [editedTask, setEditedTask] = useState('');
 
+  // Mengambil daftar todos dari server ketika komponen pertama kali dirender
   useEffect(() => {
     fetchTodos();
   }, []);
 
+  // Fungsi untuk mengambil todos dari server dan menyimpannya di state
   const fetchTodos = async () => {
     try {
       const response = await axios.get('http://localhost:5000/todos');
@@ -21,6 +29,7 @@ function App() {
     }
   };
 
+  // Fungsi untuk menambahkan task baru ke server dan state
   const handleSubmit = async () => {
     if (task.trim() !== '') {
       try {
@@ -33,6 +42,7 @@ function App() {
     }
   };
 
+  // Fungsi untuk menandai task sebagai selesai atau belum selesai
   const handleToggleComplete = async (id) => {
     try {
       const updatedTodos = todos.map((todo) => {
@@ -54,11 +64,13 @@ function App() {
     }
   };
 
+  // Fungsi untuk memulai pengeditan task
   const handleEdit = (id, task) => {
     setEditingId(id);
     setEditedTask(task);
   };
 
+  // Fungsi untuk menyimpan perubahan task yang telah diedit
   const handleSaveEdit = async (id) => {
     try {
       const updatedTodos = todos.map((todo) => {
@@ -79,6 +91,7 @@ function App() {
     }
   };
 
+  // Fungsi untuk menghapus task dari server dan state
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/todos/${id}`);
@@ -89,6 +102,7 @@ function App() {
     }
   };
 
+  // JSX yang merender tampilan aplikasi
   return (
     <div className="app-container">
       <h1 className="app-title">To Do List</h1>
@@ -134,4 +148,5 @@ function App() {
   );
 }
 
+//Mengekspor komponen App
 export default App;
