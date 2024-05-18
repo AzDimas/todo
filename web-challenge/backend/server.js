@@ -36,16 +36,20 @@ app.get('/', (req, res) => {
 
 // Endpoint untuk menambahkan tugas baru
 app.post('/todos', (req, res) => {
-  const { task } = req.body;
+  const { task, deadline } = req.body;
 
-  pool.query('INSERT INTO todos (task, completed) VALUES ($1, $2) RETURNING *', [task, false], (err, result) => {
-    if (err) {
-      console.error('Gagal menambahkan tugas:', err);
-      res.status(500).json({ error: 'Gagal menambahkan tugas' });
-    } else {
-      res.status(201).json(result.rows[0]);
+  pool.query(
+    'INSERT INTO todos (task, completed, created_at, deadline) VALUES ($1, $2, $3, $4) RETURNING *',
+    [task, false, new Date(), deadline],
+    (err, result) => {
+      if (err) {
+        console.error('Gagal menambahkan tugas:', err);
+        res.status(500).json({ error: 'Gagal menambahkan tugas' });
+      } else {
+        res.status(201).json(result.rows[0]);
+      }
     }
-  });
+  );
 });
 
 // Endpoint untuk mengambil semua tugas
@@ -79,14 +83,11 @@ app.get('/todos/:id', (req, res) => {
 // Endpoint untuk memperbarui tugas berdasarkan ID
 app.put('/todos/:id', (req, res) => {
   const id = req.params.id;
-  const { task, completed } = req.body;
-
-  // Jika klien tidak menyertakan nilai completed, atur defaultnya menjadi false
-  const updatedCompleted = completed !== undefined ? completed : false;
+  const { task, completed, deadline } = req.body;
 
   pool.query(
-    'UPDATE todos SET task = $1, completed = $2 WHERE id = $3 RETURNING *',
-    [task, updatedCompleted, id],
+    'UPDATE todos SET task = $1, completed = $2, deadline = $3 WHERE id = $4 RETURNING *',
+    [task, completed, deadline, id],
     (err, result) => {
       if (err) {
         console.error('Gagal memperbarui tugas:', err);

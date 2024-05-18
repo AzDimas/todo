@@ -1,3 +1,5 @@
+/* App.css */
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f6f6f6;
@@ -35,7 +37,7 @@ body {
   outline: none;
 }
 
-.add-button {
+.add-button, .save-button {
   background-color: #4caf50;
   color: #ffffff;
   border: none;
@@ -45,7 +47,7 @@ body {
   transition: background-color 0.3s;
 }
 
-.add-button:hover {
+.add-button:hover, .save-button:hover {
   background-color: #45a049;
 }
 
@@ -54,11 +56,10 @@ body {
   padding: 0;
 }
 
-.task {
+.task, .completed-task {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f9f9f9;
   padding: 10px;
   margin-bottom: 8px;
   border-radius: 4px;
@@ -67,10 +68,6 @@ body {
 
 .completed-task {
   background-color: #e0e0e0;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 4px;
-  cursor: pointer;
   text-decoration: line-through;
 }
 
@@ -83,16 +80,16 @@ body {
 }
 
 .delete-button {
-  color: white;
   border: none;
   border-radius: 50%;
   padding: 8px;
   cursor: pointer;
   margin-left: 10px;
+  transition: background-color 0.3s;
 }
 
 .delete-button:hover {
-  background-color: #cc0000;
+  background-color: #a30000;
 }
 
 .task input[type="text"] {
@@ -104,4 +101,78 @@ body {
 
 .task input[type="text"]:focus {
   background-color: #f0f0f0;
+}
+
+.completed-task {
+  background-color: #e0e0e0;
+  text-decoration: line-through;
+  color: grey;
+}
+
+.task {
+  border: 2px solid;
+}
+
+.task[data-category="Santai"] {
+  border-color: green;
+}
+
+.task[data-category="Siap-siap"] {
+  border-color: yellow;
+}
+
+.task[data-category="Gawat"] {
+  border-color: red;
+}
+
+.task[data-category="Terlambat"] {
+  border-color: grey;
+}
+
+.edit-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-left: 10px;
+  transition: background-color 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #0056b3;
+}
+
+.edit-container {
+  margin-top: 20px;
+}
+
+.edit-container h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.edit-container .task-input, .edit-container .deadline-input {
+  margin-bottom: 10px;
+}
+
+.category-text {
+  font-weight: bold;
+}
+
+.category-text.Santai {
+  color: green;
+}
+
+.category-text.Siap-siap {
+  color: yellow;
+}
+
+.category-text.Gawat {
+  color: red;
+}
+
+.category-text.Terlambat {
+  color: grey;
 }
